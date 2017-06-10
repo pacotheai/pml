@@ -1,3 +1,5 @@
+import paco.pml.ml.XORTrainHandler
+
 import static ratpack.groovy.Groovy.ratpack
 
 import ratpack.server.ServerConfigBuilder
@@ -24,8 +26,14 @@ ratpack {
 
     prefix('api/v1') {
       prefix('xor') {
-        all(HandlerUtils.createBindingHandler(Map))
-        post('me', XORHandler)
+        prefix('train') {
+          all(HandlerUtils.createBindingHandler(Map))
+          post('me', XORTrainHandler)
+        }
+        prefix('solve') {
+          all(HandlerUtils.createBindingHandler(Map))
+          post('me', XORHandler)
+        }
       }
     }
   }

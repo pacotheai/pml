@@ -1,12 +1,13 @@
 package paco.pml.ml
 
-import static ratpack.jackson.Jackson.json
-
-import javax.inject.Inject
-import ratpack.handling.Handler
 import ratpack.handling.Context
+import ratpack.handling.Handler
 import ratpack.rx.RxRatpack
 import rx.Observable
+
+import javax.inject.Inject
+
+import static ratpack.jackson.Jackson.json
 
 /**
  * It receives a given text and returns a list of
@@ -14,7 +15,7 @@ import rx.Observable
  *
  * @since 0.1.0
  */
-class XORHandler implements Handler {
+class XORTrainHandler implements Handler {
 
   @Inject
   XORService service
@@ -24,7 +25,9 @@ class XORHandler implements Handler {
     Map<String,String> payload = ctx.get(Map)
 
     Observable<String> xor_result = Observable.from(
-            service.solvexor(payload.param as double[]));
+            service.trainxor(
+                    payload.input as double[][],
+                    payload.ideal as double[][]));
 
     RxRatpack
       .promise(xor_result)

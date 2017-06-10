@@ -28,7 +28,11 @@ class XORService {
    * @return an arrayof type {@link Strign} containing found sentences
    * @since 0.1.0
    */
-  String[] xor(String text) {
-    return model.main(text)
+  String trainxor(double [][] input, double [][] ideal) {
+    return model.train_xor(input, ideal)
   }
+  String solvexor(double [] param) {
+    return model.solve_xor(param)
+  }
+
 }

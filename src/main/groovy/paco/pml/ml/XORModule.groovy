@@ -18,6 +18,7 @@ class XORModule extends AbstractModule {
       .in(Scopes.SINGLETON)
 
     bind(XORService).in(Scopes.SINGLETON)
+    bind(XORTrainHandler).in(Scopes.SINGLETON)
     bind(XORHandler).in(Scopes.SINGLETON)
   }
 }

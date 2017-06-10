@@ -29,10 +29,13 @@ import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;
 import org.encog.ml.data.MLDataSet;
+import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
+
+import java.util.ArrayList;
 
 /**
  * XOR: This example is essentially the "Hello World" of neural network
@@ -48,34 +51,20 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
  */
 public class XORHelloWorld {
 
-	/**
-	 * The input necessary for XOR.
-	 */
-	public static double XOR_INPUT[][] = { { 0.0, 0.0 }, { 1.0, 0.0 },
-			{ 0.0, 1.0 }, { 1.0, 1.0 } };
+	BasicNetwork network = new BasicNetwork();
 
-	/**
-	 * The ideal data necessary for XOR.
-	 */
-	public static double XOR_IDEAL[][] = { { 0.0 }, { 1.0 }, { 1.0 }, { 0.0 } };
-	
-	/**
-	 * The main method.
-	 * @param args No arguments are used.
-	 */
-	public static void main(final String args[]) {
-		
-		// create a neural network, without using a factory
-		BasicNetwork network = new BasicNetwork();
-		network.addLayer(new BasicLayer(null,true,2));
-		network.addLayer(new BasicLayer(new ActivationReLU(),true,5));
-		network.addLayer(new BasicLayer(new ActivationSigmoid(),false,1));
+	public void train_xor(final double input[][], final double ideal[][], final double param[]) {
+
+		// create a neural network, without using a factor
+		network.addLayer(new BasicLayer(null, true, 2));
+		network.addLayer(new BasicLayer(new ActivationReLU(), true, 5));
+		network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
 		network.getStructure().finalizeStructure();
 		network.reset();
 
 		// create training data
-		MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
-		
+		MLDataSet trainingSet = new BasicMLDataSet(input, ideal);
+
 		// train the neural network
 		final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
 
@@ -85,17 +74,26 @@ public class XORHelloWorld {
 			train.iteration();
 			System.out.println("Epoch #" + epoch + " Error:" + train.getError());
 			epoch++;
-		} while(train.getError() > 0.01);
+		} while (train.getError() > 0.01);
 		train.finishTraining();
+	}
+
+
+	public String solve_xor(final double param[]) {
+
+		StringBuffer result = new StringBuffer();
 
 		// test the neural network
 		System.out.println("Neural Network Results:");
-		for(MLDataPair pair: trainingSet ) {
-			final MLData output = network.compute(pair.getInput());
-			System.out.println(pair.getInput().getData(0) + "," + pair.getInput().getData(1)
-					+ ", actual=" + output.getData(0) + ",ideal=" + pair.getIdeal().getData(0));
-		}
-		
+
+		BasicMLData toSolve = new BasicMLData(param);
+
+		final MLData output = network.compute(toSolve);
+		result.append(toSolve.getData(0)).append(",").append(toSolve.getData(1)).
+				append(", actual=").append(output.getData(0)).append(",ideal=").append(toSolve.getData(0));
+
 		Encog.getInstance().shutdown();
+
+		return result.toString();
 	}
 }
