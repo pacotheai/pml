@@ -33,8 +33,11 @@ import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
+import org.encog.neural.networks.training.propagation.TrainingContinuation;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
+import org.encog.persist.EncogDirectoryPersistence;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -67,6 +70,10 @@ public class XORHelloWorld {
 
 		// train the neural network
 		final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
+
+		EncogDirectoryPersistence.saveObject(new File("/home/jose/prueba.eg"), network);
+
+//		TrainingContinuation trainPaused = train.pause();
 
 		int epoch = 1;
 

@@ -1,0 +1,238 @@
+= Paco Machine Learning
+Jose Juan Montiel
+2017-07-09
+:jbake-type: post
+:jbake-tags: jvm,hippocms
+:jbake-status: draft
+:jbake-lang: es
+:source-highlighter: prettify
+:id: pml
+:icons: font
+
+== Paco Machine Learning
+
+=== Enfoques posibles…
+(El comentado en el hangout del 4 de mayo)
+
+Uno o varios canales de entrada unificados, mediante varios chats bots permiten
+unificar la entrada de datos (chats) de distintos lugares. Por ejemplo Facebook
+Messenger y Telegram.
+
+En procesado de NLP permite extraer de los chats predicados e información.
+Puede usar https://api.ai o directamente http://opennlp.apache.org/ (modelos en
+español http://opennlp.sourceforge.net/models-1.5)
+
+Toda esta info (chats y extracción unificada de metainformación del lenguaje) se
+ve unificada en un dashboard, que permitirá ciertas acciones.
+
+Toda esta info, va  a nutrir a un ML que mediante un DSL desde ese dashboard
+permitirá refinar el entrenamiento. https://github.com/encog/encog-java-core
+
+Para la charla, solo trabajaremos sobre un dominio de aplicación (cafes?)
+por lo que gracias al dashboard, al refinamiento del entrenamiento y
+al uso de APIs (via DSL que permita ofrecer “respuestas”) automatizar las
+respuestas a preguntas, e incluso las sugerencias (más la parte de ML).
+
+Ya como PRO podíamos montar un dispositivo “alexa” con una raspberry
+y meterle la parte de reconocimiento de voz (cmusphinx)
+
+=== Ideas de bots
+(Lista de la compra, recetas)
+
+Por ejemplo, vas a la compra y al salir escaneas el ticket de la compra (tu y
+miles de personas). Y el ML de por detras, puede sugerirte podructos para tus
+próximas compras. Una vez estas en casa, buscas una receta (o le dices lo que
+cocinas cada dia), y el ML de por debajo puede sugerirte recetas. Y ya por debajo,
+para tu proxima compra puede sugerirte cual es, e incluso donde porque seria mas barato.
+Por ejemplo sugerir cosas que te hayas podido olvidar: el ejemplo de la barbacoa sin cerveza
+
+=== Machine Learning
+Clasificaciones de los distintos tipos de ML
+* Libro "The master algorithm" (prologo y ¿pagina 54?)
+
+Encog: Neural networks are particularly useful for solving problems that cannot
+be expressed as a series of steps. This may include recognizing patterns,
+classification, series prediction and data mining.
+
+- Ejemplo entrenamiento predecible: funcion XOR
+
+http://localhost:5050/api/v1/xor/train/me
+{
+	"input":[[ 0.0, 0.0 ], [ 1.0, 0.0 ], [ 0.0, 1.0 ], [ 1.0, 1.0 ]],
+	"ideal":[[ 0.0 ], [ 1.0 ], [ 1.0 ], [ 0.0 ]]
+}
+[
+  null
+]
+http://localhost:5050/api/v1/xor/solve/me
+{
+	"param":[ 0.0 , 0.0 ]
+}
+[
+  "0.0,0.0, actual=0.10135524871651282,ideal=0.0"
+]
+
+Normalizar datos
+Encog persistence
+
+Perfilar api, para poder hacer “entrenamiento lazy”
+
+* Diseñar con RAML editor o swagger
+** https://swagger.io/docs/swagger-tools/#swagger-ui-documentation-29
+*** file:///home/jose/sw/swagger/swagger-ui-3.0.17/dist/index.html
+** https://github.com/mulesoft/api-designer
+*** $ api-designer -> http://localhost:3000/
+*** $ api-spec-converter -h -> https://github.com/LucyBot-Inc/api-spec-converter
+
+- Ejemplo suma? O otra operación con tabla de verdad, finita?
+- Ejemplo de "no predecible": dado, loteria..
+- Ejemplo de multiplicacion en base  a describir la multiplicacion como repetir la suma n veces.
+- Estructuras necesarias  para definir una accion en base a otra
+- Los datashet saldran de estructuras de bbdd
+
+La librería debe permitir normalizar datos entrada, serialización de datos, y la red neuronal (ya entrenada)
+Para usar su salida como entrada de otra: funcion o red (generando datos para su entrenamiento)
+- Contador sobre elementos del datashet para: 1º permitir su entrenamiento por distintas personas, ir marcando los ok sobre distintos algoritmos.
+
+- Ecuaciones bayesianas y regresion a la media...
+- "Redes neuronales, o de decision"...
+
+* Open data
+One very useful source for neural network is the Machine Learning Repository,
+which is run by the University of California at Irvine.
+http://kdd.ics.uci.edu/
+
+* Receipes
+http://api2.bigoven.com/
+http://www.openeats.org
+http://www.themealdb.com
+
+* Euromilllones
+https://docs.google.com/spreadsheet/pub?key=0AhqMeY8ZOrNKdEFUQ3VaTHVpU29UZ3l4emFQaVZub3c&output=csv
+
+El api debe ser genérica, y permitir cambiar la implementación de la libreria de ML
+Mediante NLP se deben poder crear “estructuras” a rellenar y entrenar
+El api debe poder  permitir seleccionar el tipo de algoritmo
+Streaming - gran volumen de datos y tiempo real
+
+
+=== Lenguaje: lista de la compra
+
+Item de compra <> ingrediente <> marca
+
+* DataSheet
+** Lista de la compra
+*** Actual
+*** Pasada
+**** Ticket
+**** Del resto del personas “del mundo”
+** Receta
+*** Ingredientes
+**** De mis listas
+**** ¿Para el ingrediente X?
+** Barbacoa (Lista)
+*** Actual (resto del mundo)
+Preguntas
+** ¿Top ventas now?
+** ¿que suelo comprar?
+** ¿si tengo x que receta?
+** Si tengo X deberia comprar
+*** Y para receta z
+*** Y’ suele comprar el user’
+** Yo soy como user’
+*** Segun lo que compro
+** Me gusta X y compro Y
+
+
+
+=== Referencia de productos (lista de la compra)
+* http://www.consumer.es/web/es/alimentacion/aprender_a_comer_bien/curiosidades/2013/05/31/216882.php
+* https://world.openfoodfacts.org/
+* http://badali.umh.es/
+* https://www.kaggle.com/c/instacart-market-basket-analysis
+* https://github.com/dmlc/xgboost/blob/master/README.md
+
+
+=== Aprendizaje guiado
+Definir una serie canales input
+  -> preprocesadores
+    -> unificar las fuentes
+      -> Hub Servicios (DSL)
+        -> Toma de decisiones para invocar un servicio u otro
+          -> Ejecutar la acción
+
+=== Dispositivos para el hogar
+* https://www.amazon.com/b/ref=amb_link_10?_encoding=UTF8&node=16067214011&pd_rd_r=332T2Q3K420GN4WAQKBB&pd_rd_w=oZrEL&pd_rd_wg=9vi44&pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-leftnav&pf_rd_r=332T2Q3K420GN4WAQKBB&pf_rd_r=332T2Q3K420GN4WAQKBB&pf_rd_t=101&pf_rd_p=a26577b0-449b-401f-a482-44c5e9674e47&pf_rd_p=a26577b0-449b-401f-a482-44c5e9674e47&pf_rd_i=9818047011[Alexa]
+* Google home: ask through API
+* Hacer uno con la raspberry
+** https://www.technobuffalo.com/2016/03/26/diy-amazon-echo-with-a-raspberry-pi-heres-amazons-guide/
+** https://github.com/alexa/alexa-avs-sample-app
+* Reconocimiento vocal
+** https://cmusphinx.github.io/
+
+
+== Referencias
+
+=== Cursos
+* https://es.coursera.org/learn/machine-learning#syllabus
+* Añadir 2 referencia a cursos online del libro de Pablo Domingos
+
+=== Libros
+* https://www.amazon.es/gp/product/0141979240[The Master Algorithm]
+* https://www.amazon.es/gp/product/0715647334[How to create a mind]
+* http://www.heatonresearch.com/book/programming-neural-networks-encog3-java.html[Encog - libreria java]
+
+=== Articulos
+* https://hackernoon.com/learning-ai-if-you-suck-at-math-8bdfb4b79037
+
+=== Librerias
+* https://github.com/josephmisiti/awesome-machine-learning#java-general-purpose[Recopilacion de links relacionados con Machine Learning]
+
+** HeatonResearch
+*** https://github.com/encog/encog-java-core
+*** https://s3.amazonaws.com/heatonresearch-books/free/encog-3_3-quickstart.pdf
+*** https://github.com/encog/encog-java-examples
+*** https://github.com/encog/encog-sample-java/blob/master/src/main/java/HelloWorld.java
+
+** Neuronal + GUI
+*** http://neuroph.sourceforge.net/screenshots.html
+*** https://rapidminer.com/getting-started-central/
+*** https://rapidminer.com/resource/rapidminer-advanced-analytics-demonstration/
+
+** Multi-label datasheet
+*** http://meka.sourceforge.net/
+*** http://mulan.sourceforge.net/starting.html
+
+*** http://haifengl.github.io/smile/
+
+** Systemml
+*** https://github.com/apache/incubator-systemml
+*** https://apache.github.io/incubator-systemml/jmlc
+
+** Apache: varios... kafka - Spark
+*** https://ci.apache.org/projects/flink
+*** https://github.com/apache/mahout
+*** http://www.cs.waikato.ac.nz/ml/weka/book.html
+*** https://samoa.incubator.apache.org/#getting-started
+*** https://github.com/oryxproject/oryx
+*** https://elki-project.github.io/
+
+*** http://cogcomp.cs.illinois.edu/page/software_view/LBJava
+*** https://github.com/datumbox/datumbox-framework
+
+** Otros
+*** https://github.com/kaz-Anova/StackNet/blob/master/README.md
+
+*** https://deeplearning4j.org/quickstart.html
+*** https://github.com/jcuda/jcuda
+
+** Referencias varias (links)
+*** https://en.wikipedia.org/wiki/Robotic_process_automation[RPA]
+
+** Machine learning - Algun ml as a service
+*** https://bigml.com/pricing
+*** https://wit.ai/
+
+=== Contactos
+https://www.linkedin.com/in/raularrabales/
+https://www.linkedin.com/in/david-rios-019467a/

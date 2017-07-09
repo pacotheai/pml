@@ -72,7 +72,7 @@ public class XOROnline {
 
 		// Create training data.
 		MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
-		
+
 		// Train the neural network.
 		final StochasticGradientDescent sgd = new StochasticGradientDescent(network, trainingSet);
         sgd.setLearningRate(0.1);
