@@ -1,12 +1,13 @@
-import paco.pml.ml.XORTrainHandler
+import paco.pml.ml.handler.XORTrainHandler
 
 import static ratpack.groovy.Groovy.ratpack
+import static ratpack.groovy.Groovy.groovyMarkupTemplate
 
 import ratpack.server.ServerConfigBuilder
 
 import paco.pml.common.AppConfig
 import paco.pml.common.HandlerUtils
-import paco.pml.ml.XORHandler
+import paco.pml.ml.handler.XORResutltHandler
 
 ratpack {
 
@@ -32,7 +33,7 @@ ratpack {
         }
         prefix('solve') {
           all(HandlerUtils.createBindingHandler(Map))
-          post('me', XORHandler)
+          post('me', XORResutltHandler)
         }
       }
     }

@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-package paco.pml.ml.xor;
+package paco.pml.ml.model;
 
 import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationReLU;
@@ -52,7 +52,7 @@ import java.util.ArrayList;
  * the XORFactory example.
  * 
  */
-public class XORHelloWorld {
+public class XORModel {
 
 	BasicNetwork network = new BasicNetwork();
 

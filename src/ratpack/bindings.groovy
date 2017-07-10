@@ -11,8 +11,8 @@ import paco.pml.ml.XORModule
 ratpack {
   bindings {
     module MarkupTemplateModule
-
     module StartupModule
+
     module XORModule
   }
 }

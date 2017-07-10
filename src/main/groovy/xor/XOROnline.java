@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-package paco.pml.ml.xor;
+package xor;
 
 import org.encog.Encog;
 import org.encog.mathutil.randomize.XaiverRandomizer;

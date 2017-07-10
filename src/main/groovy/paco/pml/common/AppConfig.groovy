@@ -7,6 +7,7 @@ package paco.pml.common
  */
 class AppConfig {
   String version
+
   Models model
 
   static class Models {

@@ -2,7 +2,10 @@ package paco.pml.ml
 
 import com.google.inject.AbstractModule
 import com.google.inject.Scopes
-import paco.pml.ml.xor.XORHelloWorld
+import paco.pml.ml.handler.XORResutltHandler
+import paco.pml.ml.handler.XORTrainHandler
+import paco.pml.ml.service.XORService
+import paco.pml.ml.model.XORModel
 
 /**
  * Loads required classes to deal with sentences
@@ -13,12 +16,12 @@ class XORModule extends AbstractModule {
 
   @Override
   void configure() {
-    bind(XORHelloWorld)
-      .toProvider(XORHelloWolrdProvider)
+    bind(XORModel)
+      .toProvider(XORProvider)
       .in(Scopes.SINGLETON)
 
     bind(XORService).in(Scopes.SINGLETON)
     bind(XORTrainHandler).in(Scopes.SINGLETON)
-    bind(XORHandler).in(Scopes.SINGLETON)
+    bind(XORResutltHandler).in(Scopes.SINGLETON)
   }
 }

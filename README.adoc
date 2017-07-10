@@ -236,3 +236,14 @@ Definir una serie canales input
 === Contactos
 https://www.linkedin.com/in/raularrabales/
 https://www.linkedin.com/in/david-rios-019467a/
+
+
+== Notas
+=== Ratpack / Gradle
+https://github.com/ratpack/example-ratpack-gradle-groovy-app
+gradle run
+http://localhost:5050
+src/ratpack/ratpack.groovy
+=== OpenApi
+https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-1-introduction/
+file:///home/jose/sw/swagger/openapi-gui/index.html#
