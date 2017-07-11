@@ -1,0 +1,191 @@
+{
+	"variables": [],
+	"info": {
+		"name": "PacoTheAi",
+		"_postman_id": "7d8bfc2e-90d2-98b2-f2f5-b623e195ec0f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pnlp",
+			"description": "",
+			"item": [
+				{
+					"name": "sentiment",
+					"request": {
+						"url": "http://localhost:5050/api/v1/sentiment/me",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"text\":\"I'm angry\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "finder - location",
+					"request": {
+						"url": "http://localhost:5050/api/v1/finder/location",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"text\":\"Tutorialspoint is located in Hyderabad\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "finder - person",
+					"request": {
+						"url": "http://localhost:5050/api/v1/finder/person",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"text\":\"He is Mike is senior programming manager and Rama is a clerk both are working at Tutorialspoint\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sentence",
+					"request": {
+						"url": "http://localhost:5050/api/v1/sentence/me",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"text\":\"123\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Tokenizer",
+					"request": {
+						"url": "http://localhost:5050/api/v1/tokenizer/me",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"text\":\"Hello Jose, my name is Jose\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Sentence",
+					"request": {
+						"url": "http://localhost:5050/api/v1/tokenizer/me",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"text\":\"Hello Jose, my name is Jose\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logic Train",
+			"request": {
+				"url": "http://localhost:5050/api/v1/logic/xor/train/me",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"input\":[[ 0.0, 0.0 ], [ 1.0, 0.0 ], [ 0.0, 1.0 ], [ 1.0, 1.0 ]],\n\t\"ideal\":[[ 0.0 ], [ 1.0 ], [ 1.0 ], [ 0.0 ]]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Logic Solve",
+			"request": {
+				"url": "http://localhost:5050/api/v1/logic/xor/solve/me",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"param\":[ 0.0 , 0.0 ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Logic createNetwor",
+			"request": {
+				"url": "http://localhost:5050/api/v1/logic/xor/model/inputlayer/me",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
