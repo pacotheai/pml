@@ -1,6 +1,6 @@
 package paco.pml.ml.handler
 
-import paco.pml.ml.service.XORService
+import paco.pml.ml.service.LogicService
 import ratpack.handling.Context
 import ratpack.handling.Handler
 import ratpack.rx.RxRatpack
@@ -14,22 +14,21 @@ import static ratpack.jackson.Jackson.json
  *
  * @since 0.1.0
  */
-class XORTrainHandler implements Handler {
+class LogicCreateNetworkHandler implements Handler {
 
   @Inject
-  XORService service
+  LogicService service
 
   @Override
   void handle(Context ctx) {
-    Map<String,String> payload = ctx.get(Map)
+    def operation = ctx.getAllPathTokens().get('operation')
 
-    Observable<String> xor_result = Observable.from(
-            service.trainxor(
-                    payload.input as double[][],
-                    payload.ideal as double[][]));
+    Observable<String> createNetworkResult = Observable.from(
+            service.createNetwork()
+    );
 
     RxRatpack
-      .promise(xor_result)
+      .promise(createNetworkResult)
       .then {
         ctx.render(json(it))
       }

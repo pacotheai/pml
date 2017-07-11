@@ -7,52 +7,91 @@ Jose Juan Montiel
 :jbake-lang: es
 :source-highlighter: prettify
 :id: pml
+:imagesdir:
 :icons: font
 
 == Paco Machine Learning
 
 === Enfoques posibles…
-(El comentado en el hangout del 4 de mayo)
+Uno o varios canales de entrada unificados, mediante varios chats bots permiten unificar la entrada de datos (chats) de distintos lugares. Por ejemplo Facebook Messenger y Telegram.
 
-Uno o varios canales de entrada unificados, mediante varios chats bots permiten
-unificar la entrada de datos (chats) de distintos lugares. Por ejemplo Facebook
-Messenger y Telegram.
+En el procesado lenguaje (NLP) permite extraer de los chats predicados e información.
+Puede usar directamente http://opennlp.apache.org/[Open NLP] (modelos en http://opennlp.sourceforge.net/models-1.5[español])
 
-En procesado de NLP permite extraer de los chats predicados e información.
-Puede usar https://api.ai o directamente http://opennlp.apache.org/ (modelos en
-español http://opennlp.sourceforge.net/models-1.5)
+Toda esta info (chats y extracción unificada de metainformación del lenguaje) se ve unificada en un dashboard, que permitirá ciertas acciones. Una libreria de https://github.com/encog/encog-java-core[ML] que mediante un DSL desde ese dashboard permitirá refinar el entrenamiento.
 
-Toda esta info (chats y extracción unificada de metainformación del lenguaje) se
-ve unificada en un dashboard, que permitirá ciertas acciones.
+Para la charla, solo trabajaremos sobre un dominio de aplicación (cafes?) por lo que gracias al dashboard, al refinamiento del entrenamiento y al uso de APIs (via DSL que permita ofrecer “respuestas”) automatizar las respuestas a preguntas, e incluso las sugerencias (más la parte de ML).
 
-Toda esta info, va  a nutrir a un ML que mediante un DSL desde ese dashboard
-permitirá refinar el entrenamiento. https://github.com/encog/encog-java-core
-
-Para la charla, solo trabajaremos sobre un dominio de aplicación (cafes?)
-por lo que gracias al dashboard, al refinamiento del entrenamiento y
-al uso de APIs (via DSL que permita ofrecer “respuestas”) automatizar las
-respuestas a preguntas, e incluso las sugerencias (más la parte de ML).
-
-Ya como PRO podíamos montar un dispositivo “alexa” con una raspberry
-y meterle la parte de reconocimiento de voz (cmusphinx)
+Ya como PRO podíamos montar un dispositivo “alexa” con una raspberry y meterle la parte de reconocimiento de voz (cmusphinx).
 
 === Ideas de bots
 (Lista de la compra, recetas)
 
-Por ejemplo, vas a la compra y al salir escaneas el ticket de la compra (tu y
-miles de personas). Y el ML de por detras, puede sugerirte podructos para tus
-próximas compras. Una vez estas en casa, buscas una receta (o le dices lo que
-cocinas cada dia), y el ML de por debajo puede sugerirte recetas. Y ya por debajo,
-para tu proxima compra puede sugerirte cual es, e incluso donde porque seria mas barato.
-Por ejemplo sugerir cosas que te hayas podido olvidar: el ejemplo de la barbacoa sin cerveza
+Por ejemplo, vas a la compra y al salir escaneas el ticket de la compra (tu y miles de personas). Y el ML de por detras, puede sugerirte podructos para tus próximas compras. Una vez estas en casa, buscas una receta (o le dices lo que cocinas cada dia), y el ML de por debajo puede sugerirte recetas. Y ya por debajo, para tu proxima compra puede sugerirte cual es, e incluso donde porque seria mas barato. Por ejemplo sugerir cosas que te hayas podido olvidar: el ejemplo de la barbacoa sin cerveza.
 
 === Machine Learning
-Clasificaciones de los distintos tipos de ML
-* Libro "The master algorithm" (prologo y ¿pagina 54?)
 
-Encog: Neural networks are particularly useful for solving problems that cannot
+==== Clasificaciones de los distintos tipos de ML
+
+===== Libro "The master algorithm" (prologo y ¿pagina 54?)
+image::clase_ml.jpg[Libro,360,200]
+
+===== Libreria Encog
+Neural networks are particularly useful for solving problems that cannot
 be expressed as a series of steps. This may include recognizing patterns,
 classification, series prediction and data mining.
+
+==== API
+* 1.4 Structuring a Neural Network
+* 1.4.1 Understanding the Input Layer
+** Typically, the input layer will have one neuron for each attribute that the neural network will use for classification, regression or clustering.
+
+* 1.4.2 Understanding the Output Layer
+** Regression neural networks typically produce a single output neuron that provides the numeric value produced by the neural network. Multiple output neurons may exist if the same neural network is supposed to predict two or more numbers for the given inputs.
+** Classification produce one or more output neurons, depending on how the output class was encoded. There are several different ways to encode classes. This will be discussed in greater detail in the next chapter.
+** Clustering is setup similarly as the output neurons identify which data belongs to what cluster.
+
+* 1.4.3 Hidden layers
+** A good starting point is a single hidden layer with a number of neurons equal to twice the input layer.
+
+* 4.2 The Role of Activation Functions
+** Dependen del tipo de datos y como se comporta la red
+* 2.2 Normalizing Data
+** 2.4 Normalizing CSV Files
+* 4.5.1 Using Encog EG Persistence
+** Stop
+** Start
+
+==== WIP en PacoTheAI
+* Un primer enfoque para resolver "operaciones logicas": and, or, xor o tablas de verdad mas complejas.
+** http://localhost:5050/api/v1/logic/{operation}/model
+*** http://localhost:5050/api/v1/logic/{operation}/model/inputlayer
+*** http://localhost:5050/api/v1/logic/{operation}/model/outputlayer
+*** http://localhost:5050/api/v1/logic/{operation}/model/hiddenlayer
+*** http://localhost:5050/api/v1/logic/{operation}/model/activation/{function}
+** http://localhost:5050/api/v1/logic/{operation}/normalize
+*** http://localhost:5050/api/v1/logic/{operation}/normalize/{function}
+** http://localhost:5050/api/v1/logic/{operation}/model/data
+*** http://localhost:5050/api/v1/logic/{operation}/model/data/{format}
+** http://localhost:5050/api/v1/logic/{operation}/data/add
+** http://localhost:5050/api/v1/logic/{operation}/train
+** http://localhost:5050/api/v1/logic/{operation}/reset
+** http://localhost:5050/api/v1/logic/{operation}/stop
+** http://localhost:5050/api/v1/logic/{operation}/save
+*** http://localhost:5050/api/v1/logic/{operation}/save/{pathByUser}
+** http://localhost:5050/api/v1/logic/{operation}/start
+** http://localhost:5050/api/v1/logic/{operation}/solve
+
+* Un segundo ejemplo para resolver "clasificaciones", aqui la idea es modelar de manera generica el tipo de datos usados
+
+* Ejemplo suma? O otra operación con tabla de verdad, in-finita?
+* Ejemplo de "no predecible": dado, loteria..
+* Ejemplo de multiplicacion en base  a describir la multiplicacion como repetir la suma n veces.
+* Estructuras necesarias  para definir una accion en base a otra
+
+
+
+==== Examples...
 
 - Ejemplo entrenamiento predecible: funcion XOR
 
@@ -64,6 +103,7 @@ http://localhost:5050/api/v1/xor/train/me
 [
   null
 ]
+
 http://localhost:5050/api/v1/xor/solve/me
 {
 	"param":[ 0.0 , 0.0 ]
@@ -72,30 +112,16 @@ http://localhost:5050/api/v1/xor/solve/me
   "0.0,0.0, actual=0.10135524871651282,ideal=0.0"
 ]
 
-Normalizar datos
-Encog persistence
+==== Proximos pasos...
 
-Perfilar api, para poder hacer “entrenamiento lazy”
-
-* Diseñar con RAML editor o swagger
-** https://swagger.io/docs/swagger-tools/#swagger-ui-documentation-29
-*** file:///home/jose/sw/swagger/swagger-ui-3.0.17/dist/index.html
-** https://github.com/mulesoft/api-designer
-*** $ api-designer -> http://localhost:3000/
-*** $ api-spec-converter -h -> https://github.com/LucyBot-Inc/api-spec-converter
-
-- Ejemplo suma? O otra operación con tabla de verdad, finita?
-- Ejemplo de "no predecible": dado, loteria..
-- Ejemplo de multiplicacion en base  a describir la multiplicacion como repetir la suma n veces.
-- Estructuras necesarias  para definir una accion en base a otra
-- Los datashet saldran de estructuras de bbdd
-
-La librería debe permitir normalizar datos entrada, serialización de datos, y la red neuronal (ya entrenada)
-Para usar su salida como entrada de otra: funcion o red (generando datos para su entrenamiento)
 - Contador sobre elementos del datashet para: 1º permitir su entrenamiento por distintas personas, ir marcando los ok sobre distintos algoritmos.
+- El api debe ser genérica, y permitir cambiar la implementación de la libreria de ML
+Mediante NLP se deben poder crear “estructuras” a rellenar y entrenar
+- El api debe poder  permitir seleccionar el tipo de algoritmo
+- Streaming - gran volumen de datos y tiempo real
 
-- Ecuaciones bayesianas y regresion a la media...
-- "Redes neuronales, o de decision"...
+
+==== Links
 
 * Open data
 One very useful source for neural network is the Machine Learning Repository,
@@ -110,13 +136,9 @@ http://www.themealdb.com
 * Euromilllones
 https://docs.google.com/spreadsheet/pub?key=0AhqMeY8ZOrNKdEFUQ3VaTHVpU29UZ3l4emFQaVZub3c&output=csv
 
-El api debe ser genérica, y permitir cambiar la implementación de la libreria de ML
-Mediante NLP se deben poder crear “estructuras” a rellenar y entrenar
-El api debe poder  permitir seleccionar el tipo de algoritmo
-Streaming - gran volumen de datos y tiempo real
-
-
 === Lenguaje: lista de la compra
+
+image::modelo_lista_compra.jpg[Libro,360,200]
 
 Item de compra <> ingrediente <> marca
 
@@ -247,3 +269,10 @@ src/ratpack/ratpack.groovy
 === OpenApi
 https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-1-introduction/
 file:///home/jose/sw/swagger/openapi-gui/index.html#
+
+* Diseñar con RAML editor o swagger
+** https://swagger.io/docs/swagger-tools/#swagger-ui-documentation-29
+*** file:///home/jose/sw/swagger/swagger-ui-3.0.17/dist/index.html
+** https://github.com/mulesoft/api-designer
+*** $ api-designer -> http://localhost:3000/
+*** $ api-spec-converter -h -> https://github.com/LucyBot-Inc/api-spec-converter

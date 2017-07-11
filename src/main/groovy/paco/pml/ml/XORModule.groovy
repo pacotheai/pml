@@ -2,9 +2,10 @@ package paco.pml.ml
 
 import com.google.inject.AbstractModule
 import com.google.inject.Scopes
-import paco.pml.ml.handler.XORResutltHandler
-import paco.pml.ml.handler.XORTrainHandler
-import paco.pml.ml.service.XORService
+import paco.pml.ml.handler.LogicCreateNetworkHandler
+import paco.pml.ml.handler.LogicSolveHandler
+import paco.pml.ml.handler.LogicTrainHandler
+import paco.pml.ml.service.LogicService
 import paco.pml.ml.model.XORModel
 
 /**
@@ -20,8 +21,10 @@ class XORModule extends AbstractModule {
       .toProvider(XORProvider)
       .in(Scopes.SINGLETON)
 
-    bind(XORService).in(Scopes.SINGLETON)
-    bind(XORTrainHandler).in(Scopes.SINGLETON)
-    bind(XORResutltHandler).in(Scopes.SINGLETON)
+    bind(LogicService).in(Scopes.SINGLETON)
+
+    bind(LogicCreateNetworkHandler).in(Scopes.SINGLETON)
+    bind(LogicTrainHandler).in(Scopes.SINGLETON)
+    bind(LogicSolveHandler).in(Scopes.SINGLETON)
   }
 }

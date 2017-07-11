@@ -35,7 +35,9 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.propagation.TrainingContinuation;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
-import org.encog.persist.EncogDirectoryPersistence;
+import org.encog.persist.EncogDirectoryPersistence
+
+import static util.Looper.loop;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,16 +56,26 @@ import java.util.ArrayList;
  */
 public class XORModel {
 
+	private static final String PATH_BY_USER = "/home/jose/test.eg";
+
 	BasicNetwork network = new BasicNetwork();
 
-	public void train_xor(final double input[][], final double ideal[][], final double param[]) {
-
-		// create a neural network, without using a factor
-		network.addLayer(new BasicLayer(null, true, 2));
-		network.addLayer(new BasicLayer(new ActivationReLU(), true, 5));
-		network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
+	public String createNetwork() {
+		network = new BasicNetwork();
+		network.addLayer(new BasicLayer(null,true,2));
+		network.addLayer(new BasicLayer(new ActivationReLU(),true,5));
+		network.addLayer(new BasicLayer(new ActivationSigmoid(),false,1));
 		network.getStructure().finalizeStructure();
 		network.reset();
+
+//		EncogDirectoryPersistence.saveObject(new File(PATH_BY_USER), network)
+
+		return ""
+	}
+
+	public String trainLogicOperation(final double [][] input, final double [][] ideal) {
+
+//		BasicNetwork network = (BasicNetwork)EncogDirectoryPersistence.loadObject(new File(PATH_BY_USER));
 
 		// create training data
 		MLDataSet trainingSet = new BasicMLDataSet(input, ideal);
@@ -71,22 +83,23 @@ public class XORModel {
 		// train the neural network
 		final ResilientPropagation train = new ResilientPropagation(network, trainingSet);
 
-		EncogDirectoryPersistence.saveObject(new File("/home/jose/prueba.eg"), network);
-
 //		TrainingContinuation trainPaused = train.pause();
 
 		int epoch = 1;
-
-		do {
-			train.iteration();
-			System.out.println("Epoch #" + epoch + " Error:" + train.getError());
-			epoch++;
-		} while (train.getError() > 0.01);
+		loop {
+			train.iteration()
+			System.out.println("Epoch #" + epoch + " Error:" + train.getError())
+			epoch++
+		} until {(train.getError() < 0.01)}
 		train.finishTraining();
+
+//		EncogDirectoryPersistence.saveObject(new File(PATH_BY_USER), network)
+
+		return ""
 	}
 
 
-	public String solve_xor(final double param[]) {
+	public String solveLogicOperation(final double [] param) {
 
 		StringBuffer result = new StringBuffer();
 
@@ -95,9 +108,13 @@ public class XORModel {
 
 		BasicMLData toSolve = new BasicMLData(param);
 
+//		network = (BasicNetwork)EncogDirectoryPersistence.loadObject(new File(PATH_BY_USER));
+
 		final MLData output = network.compute(toSolve);
-		result.append(toSolve.getData(0)).append(",").append(toSolve.getData(1)).
-				append(", actual=").append(output.getData(0)).append(",ideal=").append(toSolve.getData(0));
+
+		result.append(
+				toSolve.getData(0)).append(",").append(toSolve.getData(1))
+				.append(", actual=").append(output.getData(0));
 
 		Encog.getInstance().shutdown();
 
