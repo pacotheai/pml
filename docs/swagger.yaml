@@ -1,0 +1,142 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "PacoTheAI ML API"
+  description: "A sample API for marchine learning"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    name: "PacoTheAI"
+    email: "pacotheai@gmail.com"
+    url: "http://pacotheai.github.io/blog/"
+  license:
+    name: "MIT"
+    url: "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+host: "localhost:5050"
+basePath: "/api/v1"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /logic/{operation}/model:
+    get:
+      description: Create neural network
+      operationId: createNetwork
+      parameters:
+        - name: operation
+          in: path
+          description: Type of the operation
+          required: true
+          type: string
+      responses:
+        200:
+          description: Network created successfully
+          schema:
+            $ref: '#/definitions/Empty'
+
+  /logic/{operation}/train/me:
+    post:
+      description: Train a network.
+      operationId: trainLogicOperation
+      parameters:
+        - name: operation
+          in: path
+          description: Type of the operation
+          required: true
+          type: string
+        - name: trainset
+          in: body
+          description: Trainset of data (input and ideal)
+          required: true
+          schema:
+            $ref: '#/definitions/LogicTrain'
+      responses:
+        "200":
+          description: Train executed succesfully
+          schema:
+            $ref: '#/definitions/Empty'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /logic/{operation}/solve/me:
+    post:
+      description: Solve a problem with a network.
+      operationId: solveLogicOperation
+      parameters:
+        - name: operation
+          in: path
+          description: Type of the operation
+          required: true
+          type: string
+        - name: trainset
+          in: body
+          description: Data to solve
+          required: true
+          schema:
+            $ref: '#/definitions/LogicSolve'
+      responses:
+        "200":
+          description: Train executed succesfully
+          schema:
+            $ref: '#/definitions/Empty'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+definitions:
+  Empty:
+    type: array
+    items:
+      type: string
+
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+
+  LogicTrain:
+    type: object
+    properties:
+      input:
+        type: array
+        items:
+          type: array
+          items:
+            type: number
+            format: float
+      ideal:
+        type: array
+        items:
+          type: array
+          items:
+            type: number
+            format: float
+    example: 
+      {
+        "input":[[ 0.0, 0.0 ], [ 1.0, 0.0 ], [ 0.0, 1.0 ], [ 1.0, 1.0 ]],
+        "ideal":[[ 0.0 ], [ 1.0 ], [ 1.0 ], [ 0.0 ]]
+      }
+
+  LogicSolve:
+    type: object
+    properties:
+      param:
+        type: array
+        items:
+          type: number
+          format: float
+    example: 
+      {
+        "param":[ 0.0 , 0.0 ]
+      }

@@ -65,6 +65,7 @@ classification, series prediction and data mining.
 ==== WIP en PacoTheAI
 * Un primer enfoque para resolver "operaciones logicas": and, or, xor o tablas de verdad mas complejas.
 ** http://localhost:5050/api/v1/logic/{operation}/model
+    Creacion de la red neuronal
 *** http://localhost:5050/api/v1/logic/{operation}/model/inputlayer
 *** http://localhost:5050/api/v1/logic/{operation}/model/outputlayer
 *** http://localhost:5050/api/v1/logic/{operation}/model/hiddenlayer
@@ -79,6 +80,7 @@ classification, series prediction and data mining.
 ** http://localhost:5050/api/v1/logic/{operation}/stop
 ** http://localhost:5050/api/v1/logic/{operation}/save
 *** http://localhost:5050/api/v1/logic/{operation}/save/{pathByUser}
+    https://stackoverflow.com/questions/29977979/how-can-i-pause-serialize-a-genetic-algorithm-in-encog
 ** http://localhost:5050/api/v1/logic/{operation}/start
 ** http://localhost:5050/api/v1/logic/{operation}/solve
 

@@ -1,5 +1,7 @@
 import paco.pml.ml.handler.LogicCreateNetworkHandler
 import paco.pml.ml.handler.LogicTrainHandler
+import ratpack.handling.Context
+import ratpack.handling.Handler
 
 import static ratpack.groovy.Groovy.ratpack
 import static ratpack.groovy.Groovy.groovyMarkupTemplate
@@ -48,8 +50,9 @@ ratpack {
     prefix('api/v1') {
       prefix('logic/:operation') {
         prefix('model') {
+          get(LogicCreateNetworkHandler)
           prefix('inputlayer') {
-            get('me',LogicCreateNetworkHandler)
+
           }
           prefix('outputlayer') {
 

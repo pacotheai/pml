@@ -167,7 +167,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"param\":[ 0.0 , 0.0 ]\n}"
+					"raw": "{\n\t\"param\":[ 1.0 , 1.0 ]\n}"
 				},
 				"description": ""
 			},
@@ -176,7 +176,7 @@
 		{
 			"name": "Logic createNetwor",
 			"request": {
-				"url": "http://localhost:5050/api/v1/logic/xor/model/inputlayer/me",
+				"url": "http://localhost:5050/api/v1/logic/xor/model",
 				"method": "GET",
 				"header": [],
 				"body": {
