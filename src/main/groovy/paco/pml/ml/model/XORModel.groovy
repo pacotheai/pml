@@ -36,6 +36,7 @@ import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.propagation.TrainingContinuation;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 import org.encog.persist.EncogDirectoryPersistence
+import org.encog.util.obj.SerializeObject
 
 import static util.Looper.loop;
 
@@ -58,10 +59,8 @@ public class XORModel {
 
 	private static final String PATH_BY_USER = "/home/jose/test.eg";
 
-	BasicNetwork network = new BasicNetwork();
-
 	public String createNetwork() {
-		network = new BasicNetwork();
+		BasicNetwork network = new BasicNetwork();
 		network.addLayer(new BasicLayer(null,true,2));
 		network.addLayer(new BasicLayer(new ActivationReLU(),true,5));
 		network.addLayer(new BasicLayer(new ActivationSigmoid(),false,1));
@@ -69,6 +68,7 @@ public class XORModel {
 		network.reset();
 
 //		EncogDirectoryPersistence.saveObject(new File(PATH_BY_USER), network)
+		SerializeObject.save(new File(PATH_BY_USER), network)
 
 		return ""
 	}
@@ -76,6 +76,7 @@ public class XORModel {
 	public String trainLogicOperation(final double [][] input, final double [][] ideal) {
 
 //		BasicNetwork network = (BasicNetwork)EncogDirectoryPersistence.loadObject(new File(PATH_BY_USER));
+		BasicNetwork network = (BasicNetwork)SerializeObject.load(new File(PATH_BY_USER));
 
 		// create training data
 		MLDataSet trainingSet = new BasicMLDataSet(input, ideal);
@@ -94,6 +95,7 @@ public class XORModel {
 		train.finishTraining();
 
 //		EncogDirectoryPersistence.saveObject(new File(PATH_BY_USER), network)
+		SerializeObject.save(new File(PATH_BY_USER), network)
 
 		return ""
 	}
@@ -103,12 +105,10 @@ public class XORModel {
 
 		StringBuffer result = new StringBuffer();
 
-		// test the neural network
-		System.out.println("Neural Network Results:");
-
 		BasicMLData toSolve = new BasicMLData(param);
 
-//		network = (BasicNetwork)EncogDirectoryPersistence.loadObject(new File(PATH_BY_USER));
+//		BasicNetwork network = (BasicNetwork)EncogDirectoryPersistence.loadObject(new File(PATH_BY_USER));
+		BasicNetwork network = (BasicNetwork)SerializeObject.load(new File(PATH_BY_USER));
 
 		final MLData output = network.compute(toSolve);
 
